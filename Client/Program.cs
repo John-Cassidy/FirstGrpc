@@ -46,7 +46,7 @@ var hedging = new MethodConfig { // use hedging policy to send multiple requests
 
 var options = new GrpcChannelOptions {
     ServiceConfig = new ServiceConfig {
-        MethodConfigs = { hedging }
+        MethodConfigs = { retryPolicy }
     }
 };
 using var channel = GrpcChannel.ForAddress("https://localhost:7078", options);
