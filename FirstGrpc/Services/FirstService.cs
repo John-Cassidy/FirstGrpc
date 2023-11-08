@@ -1,0 +1,54 @@
+﻿using Basics;
+using Grpc.Core;
+
+namespace FirstGrpc.Services {
+    public class FirstService : FirstServiceDefinition.FirstServiceDefinitionBase {
+        public FirstService()
+        {
+            
+        }
+
+        public override Task<Response> Unary(Request request, ServerCallContext context) {
+            // context.WriteOptions = new WriteOptions(WriteFlags.NoCompress);
+            if (!context.RequestHeaders.Where(x => x.Key == "grpc-previous-rpc-attempts").Any()) {
+                throw new RpcException(new Status(StatusCode.Internal, "Internal error: try again"));
+            }
+            var response = new Response { Message = $"{request.Content} from server" };
+            return Task.FromResult(response);
+        } 
+            
+
+        public override async Task<Response> ClientStream(IAsyncStreamReader<Request> requestStream, ServerCallContext context) {
+            Response response = new Response{ Message = "I got "};
+            while (await requestStream.MoveNext()) {
+                var requestPayload = requestStream.Current;
+                Console.WriteLine(requestPayload);
+                response.Message += requestPayload.ToString();
+            }
+
+            return response;
+        }
+           
+        public override async Task ServerStream(Request request, IServerStreamWriter<Response> responseStream, ServerCallContext context) {
+            var headerFirst = context.RequestHeaders.Get("my-first-key");
+            var myTrailer = new Metadata.Entry("a-trailer", "a-trailer-value");
+            context.ResponseTrailers.Add(myTrailer);
+
+            for (int i = 0; i < 10; i++) {
+                if (context.CancellationToken.IsCancellationRequested)
+                    return;
+                var response = new Response { Message = i.ToString() };
+                await responseStream.WriteAsync(response);
+                await Task.Delay(1000);
+            }
+        }
+
+        public override async Task BiDirectionalStream(IAsyncStreamReader<Request> requestStream, IServerStreamWriter<Response> responseStream, ServerCallContext context) {
+            while (await requestStream.MoveNext()) {
+                var requestPayload = requestStream.Current;
+                Console.WriteLine(requestPayload);
+                await responseStream.WriteAsync(new Response { Message = requestPayload.ToString() });
+            }
+        }
+    }
+}
