@@ -2,24 +2,22 @@
 using Grpc.Core;
 
 namespace FirstGrpc.Services {
-    public class FirstService : FirstServiceDefinition.FirstServiceDefinitionBase {
-        public FirstService()
-        {
-            
+    public class FirstService : FirstServiceDefinition.FirstServiceDefinitionBase, IFirstService {
+        public FirstService() {
+
         }
 
         public override Task<Response> Unary(Request request, ServerCallContext context) {
-            // context.WriteOptions = new WriteOptions(WriteFlags.NoCompress);
-            if (!context.RequestHeaders.Where(x => x.Key == "grpc-previous-rpc-attempts").Any()) {
-                throw new RpcException(new Status(StatusCode.Internal, "Internal error: try again"));
-            }
+            //if (!context.RequestHeaders.Where(x => x.Key == "grpc-previous-rpc-attempts").Any()) {
+            //    throw new RpcException(new Status(StatusCode.Internal, "Internal error: try again"));
+            //}
             var response = new Response { Message = $"{request.Content} from server" };
             return Task.FromResult(response);
-        } 
-            
+        }
+
 
         public override async Task<Response> ClientStream(IAsyncStreamReader<Request> requestStream, ServerCallContext context) {
-            Response response = new Response{ Message = "I got "};
+            Response response = new Response { Message = "I got " };
             while (await requestStream.MoveNext()) {
                 var requestPayload = requestStream.Current;
                 Console.WriteLine(requestPayload);
@@ -28,7 +26,7 @@ namespace FirstGrpc.Services {
 
             return response;
         }
-           
+
         public override async Task ServerStream(Request request, IServerStreamWriter<Response> responseStream, ServerCallContext context) {
             var headerFirst = context.RequestHeaders.Get("my-first-key");
             var myTrailer = new Metadata.Entry("a-trailer", "a-trailer-value");
