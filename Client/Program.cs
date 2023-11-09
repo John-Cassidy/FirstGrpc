@@ -1,5 +1,6 @@
 ﻿using Basics;
 using Grpc.Core;
+using Grpc.Health.V1;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Balancer;
 using Grpc.Net.Client.Configuration;
@@ -50,6 +51,11 @@ var options = new GrpcChannelOptions {
     }
 };
 using var channel = GrpcChannel.ForAddress("https://localhost:7078", options);
+
+//create health check client
+var healthClient = new Health.HealthClient(channel);
+var healthResult = await healthClient.CheckAsync(new HealthCheckRequest());
+Console.WriteLine($"{healthResult.Status}");
 
 var client = new FirstServiceDefinition.FirstServiceDefinitionClient(channel);
 Unary(client);

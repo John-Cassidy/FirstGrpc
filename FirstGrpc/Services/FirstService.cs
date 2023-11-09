@@ -8,7 +8,7 @@ namespace FirstGrpc.Services {
 
         }
 
-        [Authorize]
+        //[Authorize]
         public override Task<Response> Unary(Request request, ServerCallContext context) {
             //if (!context.RequestHeaders.Where(x => x.Key == "grpc-previous-rpc-attempts").Any()) {
             //    throw new RpcException(new Status(StatusCode.Internal, "Internal error: try again"));
