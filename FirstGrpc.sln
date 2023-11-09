@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCClient", "MVCClient\MVCClient.csproj", "{3D32D514-FAB7-4D9F-8D19-0BF0272022C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstGrpc.Test.Unit", "FirstGrpc.Test.Unit\FirstGrpc.Test.Unit.csproj", "{F32FD62C-16EB-45B3-B61C-516CC2E1E3AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstGrpc.Test.Unit", "FirstGrpc.Test.Unit\FirstGrpc.Test.Unit.csproj", "{F32FD62C-16EB-45B3-B61C-516CC2E1E3AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstGrpc.Tests.Integration", "FirstGrpc.Tests.Integration\FirstGrpc.Tests.Integration.csproj", "{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F32FD62C-16EB-45B3-B61C-516CC2E1E3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F32FD62C-16EB-45B3-B61C-516CC2E1E3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F32FD62C-16EB-45B3-B61C-516CC2E1E3AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
