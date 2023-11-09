@@ -4,10 +4,37 @@ using Grpc.Health.V1;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Balancer;
 using Grpc.Net.Client.Configuration;
+using Grpc.Reflection.V1Alpha;
 using Microsoft.Extensions.DependencyInjection;
 using static Grpc.Core.Metadata;
+using ServerReflectionClient = Grpc.Reflection.V1Alpha.ServerReflection.ServerReflectionClient;
 
 Console.WriteLine("Hello, World!");
+
+using var channelReflect = GrpcChannel.ForAddress("https://localhost:7078");
+var client = new ServerReflectionClient(channelReflect);
+ServerReflectionRequest request = new ServerReflectionRequest {  ListServices = "" };
+
+using var call = client.ServerReflectionInfo();
+await call.RequestStream.WriteAsync(request);
+await call.RequestStream.CompleteAsync();
+
+while (await call.ResponseStream.MoveNext()) {
+    var response = call.ResponseStream.Current;
+    foreach(var item in response.ListServicesResponse.Service) {
+        Console.WriteLine($"- {item.Name}");
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 //var factory = new StaticResolverFactory(add => new[] {
 //new BalancerAddress("localhost", 5057),
@@ -57,8 +84,9 @@ var healthClient = new Health.HealthClient(channel);
 var healthResult = await healthClient.CheckAsync(new HealthCheckRequest());
 Console.WriteLine($"{healthResult.Status}");
 
-var client = new FirstServiceDefinition.FirstServiceDefinitionClient(channel);
-Unary(client);
+//var client = new FirstServiceDefinition.FirstServiceDefinitionClient(channel);
+//Unary(client);
+
 //await ClientStreamingAsync(client);
 //ServerStreaming(client);
 //BiDirectionalStreaming(client);
