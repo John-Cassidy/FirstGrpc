@@ -1,3 +1,4 @@
+using Auth;
 using Basics;
 using MVCClient.Interceptors;
 
@@ -10,6 +11,13 @@ builder.Services.AddTransient<ClientLoggerInterceptor>();
 
 builder.Services.AddGrpcClient<FirstServiceDefinition.FirstServiceDefinitionClient>(o => {
     o.Address = new Uri("https://localhost:7078");
+})
+.AddCallCredentials((context, metadata) => {
+    var token = JwtHelper.GenerateJwtToken(name: "MyCoolClient");
+    if (token != null) {
+        metadata.Add("Authorization", $"Bearer {token}");
+    }
+    return Task.CompletedTask;
 })
 .AddInterceptor<ClientLoggerInterceptor>();
 

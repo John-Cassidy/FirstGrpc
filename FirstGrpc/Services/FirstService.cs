@@ -1,5 +1,6 @@
 ﻿using Basics;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FirstGrpc.Services {
     public class FirstService : FirstServiceDefinition.FirstServiceDefinitionBase, IFirstService {
@@ -7,6 +8,7 @@ namespace FirstGrpc.Services {
 
         }
 
+        [Authorize]
         public override Task<Response> Unary(Request request, ServerCallContext context) {
             //if (!context.RequestHeaders.Where(x => x.Key == "grpc-previous-rpc-attempts").Any()) {
             //    throw new RpcException(new Status(StatusCode.Internal, "Internal error: try again"));

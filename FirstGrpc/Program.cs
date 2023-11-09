@@ -1,5 +1,9 @@
+using Auth;
 using FirstGrpc.Interceptors;
 using FirstGrpc.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,21 @@ builder.Services.AddGrpc(option => {
     option.ResponseCompressionLevel = System.IO.Compression.CompressionLevel.SmallestSize;
 
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o => o.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = false,
+        ValidateActor = false,
+        IssuerSigningKey = JwtHelper.SecurityKey
+    });
+
+    builder.Services.AddAuthorization(o => o.AddPolicy(JwtBearerDefaults.AuthenticationScheme,
+        p=> {
+            p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+            p.RequireClaim(ClaimTypes.Name);
+        }));
 
 var app = builder.Build();
 

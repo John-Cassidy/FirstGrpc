@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstGrpc.Test.Unit", "Firs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstGrpc.Tests.Integration", "FirstGrpc.Tests.Integration\FirstGrpc.Tests.Integration.csproj", "{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "Auth\Auth.csproj", "{276532F1-B272-468D-BC4A-9A4F2275F8DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89AEE03F-6E2D-4FD7-8643-C2CF3CFAB128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{276532F1-B272-468D-BC4A-9A4F2275F8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{276532F1-B272-468D-BC4A-9A4F2275F8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{276532F1-B272-468D-BC4A-9A4F2275F8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{276532F1-B272-468D-BC4A-9A4F2275F8DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
